@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyCloud Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; }
+    h1 { color: #333; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Virtual Machines</h1>
+  <table id="vm-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Memory</th>
+        <th>CPUs</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:5000/api/vms')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#vm-table tbody');
+        data.forEach(vm => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${vm.vmid}</td>
+            <td>${vm.name || '-'}</td>
+            <td>${vm.status}</td>
+            <td>${(vm.mem / 1024 / 1024).toFixed(0)} MB</td>
+            <td>${vm.cores}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => console.error('Error fetching VMs:', err));
+  </script>
+</body>
+</html>
