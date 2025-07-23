@@ -2,17 +2,17 @@ version: '3.9'
 
 services:
   backend:
-  build: ./backend
-  container_name: mycloud-backend
-  ports:
-    - "5000:5000"
-  environment:
-    - NODE_ENV=development
+    build: ./backend
+    container_name: mycloud-backend
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
 
   frontend:
     build: ./frontend
     container_name: mycloud-frontend
     ports:
-      - "3000:80"  # Nginx listens on port 80 inside the container
-    volumes:
-      - ./frontend:/usr/share/nginx/html  # Nginx default path
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
