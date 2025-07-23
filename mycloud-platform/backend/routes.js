@@ -1,15 +1,14 @@
 import express from 'express';
-import { listVMs } from './proxmox.js';
-
 const router = express.Router();
 
-router.get('/vms', async (req, res) => {
-  try {
-    const vms = await listVMs();
-    res.json(vms);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// ✅ Root endpoint
+router.get('/', (req, res) => {
+  res.send('🚀 MyCloud Backend is Running!');
+});
+
+// Your other routes (e.g. /vms, /create, etc.)
+router.get('/test', (req, res) => {
+  res.json({ message: 'Test route works!' });
 });
 
 export default router;
