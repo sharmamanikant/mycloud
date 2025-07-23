@@ -2,14 +2,12 @@ version: '3.9'
 
 services:
   backend:
-    build: ./backend
-    container_name: mycloud-backend
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./backend:/app
-    environment:
-      - NODE_ENV=development
+  build: ./backend
+  container_name: mycloud-backend
+  ports:
+    - "5000:5000"
+  environment:
+    - NODE_ENV=development
 
   frontend:
     build: ./frontend
