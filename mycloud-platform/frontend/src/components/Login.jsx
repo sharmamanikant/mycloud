@@ -1,18 +1,29 @@
 // src/components/Login.jsx
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // Replace this with actual API call
-    if (email === 'admin@mycloud.com' && password === 'admin123') {
-      onLoginSuccess(); // tell App login is successful
-    } else {
-      alert('Invalid credentials');
+    try {
+      const res = await axios.post('http://localhost:5000/api/login', {
+        email,
+        password
+      });
+
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      onLoginSuccess();
+    } catch (err) {
+      alert('Login failed: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,9 +51,10 @@ function Login({ onLoginSuccess }) {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
-          Sign In
+          {loading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
     </div>

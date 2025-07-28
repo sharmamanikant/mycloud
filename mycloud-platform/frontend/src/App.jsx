@@ -1,11 +1,16 @@
 // src/App.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import CreateVMForm from './components/CreateVMForm';
 import Login from './components/Login';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) setIsLoggedIn(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
