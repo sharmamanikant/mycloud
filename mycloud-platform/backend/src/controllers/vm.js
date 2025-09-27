@@ -6,7 +6,7 @@ exports.createVM = async (req, res) => {
 
     // Proxmox API call (adjust node, storage, etc.)
     const response = await axios.post(
-      `${process.env.PROXMOX_API_URL}/nodes/pve/qemu`,
+      `${process.env.https://10.30.0.100:8006/#v1:0:18:4:5::::::=apitokens}/nodes/pve/qemu`,
       {
         vmid: Math.floor(Math.random() * 100000), // Generate VM ID
         name,
@@ -16,7 +16,7 @@ exports.createVM = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `PVEAPIToken=${process.env.PROXMOX_USER}!${process.env.PROXMOX_TOKEN_ID}=${process.env.PROXMOX_SECRET}`,
+          Authorization: `PVEAPIToken=${process.env.root}!${process.env.root@pam!cloud}=${process.env.e9418a2d-e7ea-43fa-95d2-2cbfdb9a32b8}`,
         },
       }
     );
@@ -27,3 +27,4 @@ exports.createVM = async (req, res) => {
     res.status(500).json({ msg: "Error creating VM" });
   }
 };
+
