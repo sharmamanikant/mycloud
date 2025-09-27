@@ -1,34 +1,8 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
+const axios = require("axios");
 
-const { PROXMOX_HOST, PROXMOX_USER, PROXMOX_PASS, NODE, TEMPLATE } = process.env;
-
-let ticket = null;
-let csrfToken = null;
-
-async function login() {
-  const response = await axios.post(`${PROXMOX_HOST}/api2/json/access/ticket`, null, {
-    params: {
-      username: PROXMOX_USER,
-      password: PROXMOX_PASS
-    },
-    httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
-  });
-
-  ticket = response.data.data.ticket;
-  csrfToken = response.data.data.CSRFPreventionToken;
-
-  return { ticket, csrfToken };
-}
-
-export async function listVMs() {
-  if (!ticket) await login();
-
-  const response = await axios.get(`${PROXMOX_HOST}/api2/json/nodes/${NODE}/qemu`, {
-    headers: { Cookie: `PVEAuthCookie=${ticket}` },
-    httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
-  });
-
-  return response.data.data;
-}
+const client = axios.create({
+  baseURL: process.env.https://10.30.0.100:8006/#v1:0:18:4:5::::::=apitokens,
+  headers: {
+    Authorization: `PVEAPIToken=${process.env.PROXMOX_USER}!${process.env.root@pam!cloud}=${process.env.e9418a2d-e7ea-43fa-95d2-2cbfdb9a32b8}`,
+  },
+});
