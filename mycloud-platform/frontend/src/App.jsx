@@ -31,3 +31,18 @@ function App() {
 }
 
 export default App;
+import { useState } from "react";
+import Login from "./components/Login";
+import CreateVMForm from "./components/CreateVMForm";
+
+function App() {
+  const [auth, setAuth] = useState(!!localStorage.getItem("token"));
+
+  return (
+    <div>
+      {auth ? <CreateVMForm /> : <Login setAuth={setAuth} />}
+    </div>
+  );
+}
+
+export default App;
