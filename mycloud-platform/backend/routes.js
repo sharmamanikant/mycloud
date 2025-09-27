@@ -12,3 +12,11 @@ router.get('/test', (req, res) => {
 });
 
 export default router;
+const express = require("express");
+const router = express.Router();
+const authMiddleware = require("./src/middleware/auth");
+const { createVM } = require("./src/controllers/vm");
+
+router.post("/vm/create", authMiddleware, createVM);
+
+module.exports = router;
