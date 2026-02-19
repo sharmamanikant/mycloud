@@ -1,8 +1,15 @@
-const axios = require("axios");
+import axios from "axios";
+import https from "https";
 
-const client = axios.create({
-  baseURL: process.env.https://10.30.0.100:8006/#v1:0:18:4:5::::::=apitokens,
+// Set PROXMOX_TLS_VERIFY=true in production when using a valid certificate
+const tlsVerify = process.env.PROXMOX_TLS_VERIFY === "true";
+
+const proxmoxClient = axios.create({
+  baseURL: process.env.PROXMOX_API_URL,
   headers: {
-    Authorization: `PVEAPIToken=${process.env.root}!${process.env.root@pam!cloud}=${process.env.e9418a2d-e7ea-43fa-95d2-2cbfdb9a32b8}`,
+    Authorization: `PVEAPIToken=${process.env.PROXMOX_USER}!${process.env.PROXMOX_TOKEN_ID}=${process.env.PROXMOX_SECRET}`,
   },
+  httpsAgent: new https.Agent({ rejectUnauthorized: tlsVerify }),
 });
+
+export default proxmoxClient;
