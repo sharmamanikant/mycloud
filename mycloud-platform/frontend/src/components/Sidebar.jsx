@@ -1,12 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaServer, FaShieldAlt, FaNetworkWired, FaTachometerAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaServer, FaShieldAlt, FaNetworkWired, FaTachometerAlt, FaSignOutAlt, FaRobot } from "react-icons/fa";
 
 const menu = [
   { name: "Dashboard", path: "/", icon: <FaTachometerAlt /> },
   { name: "Virtual Machines", path: "/vms", icon: <FaServer /> },
   { name: "Security Groups", path: "/security-groups", icon: <FaShieldAlt /> },
   { name: "Networking", path: "/networking", icon: <FaNetworkWired /> },
+  { name: "AI Agents", path: "/ai-agents", icon: <FaRobot /> },
 ];
 
 const Sidebar = ({ onLogout }) => {

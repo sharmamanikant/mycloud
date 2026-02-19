@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import VMList from "./components/VMList";
 import CreateVMForm from "./components/CreateVMForm";
 import SecurityGroups from "./components/SecurityGroups";
+import AIAgents from "./components/AIAgents";
 import Login from "./components/Login";
 import Register from "./components/Register";
 
@@ -42,6 +43,7 @@ function App() {
             <Route path="/vms" element={<VMList />} />
             <Route path="/vms/create" element={<CreateVMForm />} />
             <Route path="/security-groups" element={<SecurityGroups />} />
+            <Route path="/ai-agents" element={<AIAgents />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
