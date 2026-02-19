@@ -9,6 +9,13 @@ import {
   updateSecurityGroup,
   deleteSecurityGroup,
 } from "./src/controllers/securityGroup.js";
+import {
+  listAgents,
+  createAgent,
+  updateAgent,
+  deleteAgent,
+  executeJob,
+} from "./src/controllers/aiAgent.js";
 
 const router = express.Router();
 
@@ -34,5 +41,12 @@ router.get("/security-groups", apiLimiter, authMiddleware, listSecurityGroups);
 router.post("/security-groups", apiLimiter, authMiddleware, createSecurityGroup);
 router.put("/security-groups/:id", apiLimiter, authMiddleware, updateSecurityGroup);
 router.delete("/security-groups/:id", apiLimiter, authMiddleware, deleteSecurityGroup);
+
+// AI agent routes (protected + rate limited)
+router.get("/ai-agents", apiLimiter, authMiddleware, listAgents);
+router.post("/ai-agents", apiLimiter, authMiddleware, createAgent);
+router.put("/ai-agents/:id", apiLimiter, authMiddleware, updateAgent);
+router.delete("/ai-agents/:id", apiLimiter, authMiddleware, deleteAgent);
+router.post("/ai-agents/:id/execute", apiLimiter, authMiddleware, executeJob);
 
 export default router;

@@ -86,6 +86,9 @@ const Dashboard = () => {
             <Link to="/security-groups" className="block bg-green-50 text-green-700 px-4 py-2 rounded hover:bg-green-100">
               🛡 Manage Security Groups
             </Link>
+            <Link to="/ai-agents" className="block bg-purple-50 text-purple-700 px-4 py-2 rounded hover:bg-purple-100">
+              🤖 AI Agents Console
+            </Link>
           </div>
         </div>
         <div className="bg-white p-6 rounded-lg shadow">
