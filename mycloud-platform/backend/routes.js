@@ -1,22 +1,38 @@
-import express from 'express';
+import express from "express";
+import rateLimit from "express-rate-limit";
+import authMiddleware from "./src/middleware/auth.js";
+import { register, login } from "./src/controllers/auth.js";
+import { listVMs, createVM, startVM, stopVM, deleteVM } from "./src/controllers/vm.js";
+import {
+  listSecurityGroups,
+  createSecurityGroup,
+  updateSecurityGroup,
+  deleteSecurityGroup,
+} from "./src/controllers/securityGroup.js";
+
 const router = express.Router();
 
-// ✅ Root endpoint
-router.get('/', (req, res) => {
-  res.send('🚀 MyCloud Backend is Running!');
-});
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false });
+const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false });
 
-// Your other routes (e.g. /vms, /create, etc.)
-router.get('/test', (req, res) => {
-  res.json({ message: 'Test route works!' });
-});
+// Health check
+router.get("/", (req, res) => res.json({ msg: "MyCloud API running" }));
+
+// Auth routes (strict rate limiting)
+router.post("/auth/register", authLimiter, register);
+router.post("/auth/login", authLimiter, login);
+
+// VM routes (protected + rate limited)
+router.get("/vms", apiLimiter, authMiddleware, listVMs);
+router.post("/vms", apiLimiter, authMiddleware, createVM);
+router.post("/vms/:vmid/start", apiLimiter, authMiddleware, startVM);
+router.post("/vms/:vmid/stop", apiLimiter, authMiddleware, stopVM);
+router.delete("/vms/:vmid", apiLimiter, authMiddleware, deleteVM);
+
+// Security group routes (protected + rate limited)
+router.get("/security-groups", apiLimiter, authMiddleware, listSecurityGroups);
+router.post("/security-groups", apiLimiter, authMiddleware, createSecurityGroup);
+router.put("/security-groups/:id", apiLimiter, authMiddleware, updateSecurityGroup);
+router.delete("/security-groups/:id", apiLimiter, authMiddleware, deleteSecurityGroup);
 
 export default router;
-const express = require("express");
-const router = express.Router();
-const authMiddleware = require("./src/middleware/auth");
-const { createVM } = require("./src/controllers/vm");
-
-router.post("/vm/create", authMiddleware, createVM);
-
-module.exports = router;
